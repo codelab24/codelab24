@@ -1,0 +1,5 @@
+application_main_default:
+    resource: "@ApplicationMainDefaultBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
