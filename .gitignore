@@ -14,4 +14,4 @@ app/config/parameters.yml
 
 #ide files
 .idea
-
+composer.phar

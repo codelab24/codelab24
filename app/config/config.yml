@@ -63,3 +63,11 @@ swiftmailer:
     username:  %mailer_user%
     password:  %mailer_password%
     spool:     { type: memory }
+
+#services:
+#    application.hello.menu.voter.request:
+#        class: Application\Main\DefaultBundle\Menu\RequestVoter
+#        arguments:
+#            - @service_container
+#        tags:
+#            - { name: knp_menu.voter }
