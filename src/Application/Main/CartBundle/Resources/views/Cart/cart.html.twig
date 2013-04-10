@@ -1,0 +1,45 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Cart</h1>
+    {% if cart|length >= 1 %}
+        <table class="table table-bordered table-condensed">
+        <tr>
+            <th class="">Item</th>
+            <th>Unit Price</th>
+            <th>Quantity</th>
+
+            <th>Price</th>
+            <th></th>
+        </tr>
+    {% endif %}
+    {% for item in cart %}
+        <tr>
+            <td>{{ item.title }}</td>
+            <td>{{ item.price }}</td>
+            <td>{{ item.quantity }}</td>
+
+            <td>{{ item.subtotal }}</td>
+            <td><a href="{{ path('cart_remove', {'id': item.item_id}) }}">Remove</a> </td>
+        </tr>
+    {% else %}
+        Your cart is empty
+    {% endfor %}
+
+    {% if cart|length >= 1 %}
+        </table>
+        {# paypal form #}
+        <form action="" method="post">
+        {% for item in cart %}
+
+
+
+        {% endfor %}
+        </form>
+        {# end form#}
+        Items: {{ cart|length }} Total: {{ total }}<br>
+        <a href="{{ path('cart_empty') }}" class="btn btn-danger">Clear Cart</a>
+    {% endif %}
+
+
+{% endblock %}
