@@ -1,3 +1,13 @@
+application_main_media:
+    resource: "@ApplicationMainMediaBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+application_main_cart:
+    resource: "@ApplicationMainCartBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 application_main_default:
     resource: "@ApplicationMainDefaultBundle/Controller/"
     type:     annotation
