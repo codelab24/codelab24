@@ -55,6 +55,14 @@ doctrine:
     orm:
         auto_generate_proxy_classes: %kernel.debug%
         auto_mapping: true
+        # only these lines are added additionally
+        mappings:
+            translatable:
+                type: annotation
+                alias: Gedmo
+                prefix: Gedmo\Translatable\Entity
+                # make sure vendor library location is correct
+                dir: "%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Translatable/Entity"
 
 # Swiftmailer Configuration
 swiftmailer:
@@ -75,3 +83,28 @@ fos_user:
     db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
     firewall_name: main
     user_class: Application\Main\UserBundle\Entity\User
+
+# Facebook configuration
+fos_facebook:
+  alias:  facebook
+  app_id: 549306745092755
+  secret: eaa4209b6e384733a692655bf8d6cfcc
+  cookie: true
+  permissions: [email, user_hometown, user_location]
+
+services:
+    fos_facebook.user.login:
+        class: Application\Main\UserBundle\Security\User\Provider\FacebookProvider
+        arguments:
+            facebook: "@fos_facebook.api"
+            userManager: "@fos_user.user_manager"
+            validator: "@validator"
+            container: "@service_container"
+
+#Avalanche
+avalanche_imagine:
+    filters:
+        my_thumb:
+            type:    thumbnail
+            options: { size: [120, 90], mode: outbound }
+

@@ -8,6 +8,16 @@ application_main_default:
     type:     annotation
     prefix:   /
 
+application_main_cart:
+    resource: "@ApplicationMainCartBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+application_main_media:
+    resource: "@ApplicationMainMediaBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"
 
@@ -26,4 +36,25 @@ fos_user_resetting:
 fos_user_change_password:
     resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
     prefix: /profile
+
+_security_check:
+  pattern:  /login_check
+_security_logout:
+  pattern:  /logout
+
+_security_check_facebook:
+    pattern:   /facebook/login_check
+    defaults:  { _controller: ApplicationMainUserBundle:User:loginFb }
+
+_security_facebook_logout:
+  pattern:  /facebook/logout
+
+user_couple_fb_with_account:
+    pattern: /user/couple/facebook
+    defaults: { _controller: ApplicationMainUserBundle:User:connectFacebookWithAccount }
+
+#avalanche image bundle
+_imagine:
+    resource: .
+    type:     imagine
 

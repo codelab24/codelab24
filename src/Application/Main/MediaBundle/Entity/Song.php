@@ -49,85 +49,85 @@ class Song
      */
     private $updatedAt;
 
-    /////////////////////////////////////
-    /**
-     * @Assert\File(maxSize="6000000")
-     */
-    public $file;
-
-
-    public function getAbsoluteImage()
-    {
-        return null === $this->path
-            ? null
-            : $this->getUploadRootDir().'/'.$this->path;
-    }
-
-    public function getWebImage()
-    {
-        return null === $this->path
-            ? null
-            : $this->getUploadDir().'/'.$this->path;
-    }
-
-    protected function getUploadRootDir()
-    {
-        // the absolute directory path where uploaded
-        // documents should be saved
-        return __DIR__.'/../../../../web/'.$this->getUploadDir();
-    }
-
-    protected function getUploadDir()
-    {
-        // get rid of the __DIR__ so it doesn't screw up
-        // when displaying uploaded doc/path in the view.
-        return 'uploads/media/tracks';
-    }
-
-
-    /**
-     * @ORM\PrePersist()
-     * @ORM\PreUpdate()
-     */
-    public function preUpload()
-    {
-        if (null !== $this->file) {
-            // do whatever you want to generate a unique name
-            $filename = sha1(uniqid(mt_rand(), true));
-            If($this->file->guessExtension() == 'mpga') {
-                $this->path = $filename.'.mp3';
-            }
-            //$this->path = $filename.'.'.$this->file->guessExtension();
-        }
-    }
-
-    /**
-     * @ORM\PostPersist()
-     * @ORM\PostUpdate()
-     */
-    public function upload()
-    {
-        if (null === $this->file) {
-            return;
-        }
-        // if there is an error when moving the file, an exception will
-        // be automatically thrown by move(). This will properly prevent
-        // the entity from being persisted to the database on error
-        $this->file->move($this->getUploadRootDir(), $this->path);
-        unset($this->file);
-    }
-    /**
-     * @ORM\PostRemove()
-     */
-    public function removeUpload()
-    {
-        if ($file = $this->getAbsoluteImage()) {
-            unlink($file);
-        }
-    }
-
-
-    /////////////////////////////////////
+//    /////////////////////////////////////
+//    /**
+//     * @Assert\File(maxSize="6000000")
+//     */
+//    public $file;
+//
+//
+//    public function getAbsoluteImage()
+//    {
+//        return null === $this->path
+//            ? null
+//            : $this->getUploadRootDir().'/'.$this->path;
+//    }
+//
+//    public function getWebImage()
+//    {
+//        return null === $this->path
+//            ? null
+//            : $this->getUploadDir().'/'.$this->path;
+//    }
+//
+//    protected function getUploadRootDir()
+//    {
+//        // the absolute directory path where uploaded
+//        // documents should be saved
+//        return __DIR__.'/../../../../web/'.$this->getUploadDir();
+//    }
+//
+//    protected function getUploadDir()
+//    {
+//        // get rid of the __DIR__ so it doesn't screw up
+//        // when displaying uploaded doc/path in the view.
+//        return 'uploads/media/tracks';
+//    }
+//
+//
+//    /**
+//     * @ORM\PrePersist()
+//     * @ORM\PreUpdate()
+//     */
+//    public function preUpload()
+//    {
+//        if (null !== $this->file) {
+//            // do whatever you want to generate a unique name
+//            $filename = sha1(uniqid(mt_rand(), true));
+//            If($this->file->guessExtension() == 'mpga') {
+//                $this->path = $filename.'.mp3';
+//            }
+//            //$this->path = $filename.'.'.$this->file->guessExtension();
+//        }
+//    }
+//
+//    /**
+//     * @ORM\PostPersist()
+//     * @ORM\PostUpdate()
+//     */
+//    public function upload()
+//    {
+//        if (null === $this->file) {
+//            return;
+//        }
+//        // if there is an error when moving the file, an exception will
+//        // be automatically thrown by move(). This will properly prevent
+//        // the entity from being persisted to the database on error
+//        $this->file->move($this->getUploadRootDir(), $this->path);
+//        unset($this->file);
+//    }
+//    /**
+//     * @ORM\PostRemove()
+//     */
+//    public function removeUpload()
+//    {
+//        if ($file = $this->getAbsoluteImage()) {
+//            unlink($file);
+//        }
+//    }
+//
+//
+//    /////////////////////////////////////
 
     //
     /**

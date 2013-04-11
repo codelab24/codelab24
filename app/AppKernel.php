@@ -19,10 +19,17 @@ class AppKernel extends Kernel
             new JMS\AopBundle\JMSAopBundle(),
             new JMS\DiExtraBundle\JMSDiExtraBundle($this),
             new JMS\SecurityExtraBundle\JMSSecurityExtraBundle(),
-            new Application\Main\DefaultBundle\ApplicationMainDefaultBundle(),
+
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
             new FOS\UserBundle\FOSUserBundle(),
-            //new Application\Main\UserBundle\ApplicationMainUserBundle(),
+            new FOS\FacebookBundle\FOSFacebookBundle(),
+            new Avalanche\Bundle\ImagineBundle\AvalancheImagineBundle(),
+
+
+            new Application\Main\UserBundle\ApplicationMainUserBundle(),
+            new Application\Main\DefaultBundle\ApplicationMainDefaultBundle(),
+            new Application\Main\CartBundle\ApplicationMainCartBundle(),
+            new Application\Main\MediaBundle\ApplicationMainMediaBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
