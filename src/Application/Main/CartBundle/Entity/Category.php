@@ -2,6 +2,7 @@
 
 namespace Application\Main\CartBundle\Entity;
 
+use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -20,6 +21,17 @@ class Category
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
+    /**
+     * @ORM\Column(length=16)
+     */
+    private $code;
+
+    /**
+     * @Gedmo\Slug(fields={"title", "code"})
+     * @ORM\Column(length=128, unique=true)
+     */
+    private $slug;
 
     /**
      * @var string
@@ -202,6 +214,7 @@ class Category
     {
         $this->products = new \Doctrine\Common\Collections\ArrayCollection();
         $this->createdAt = $this->updatedAt = new \DateTime();
+        $this->code = substr(uniqid('', true), -5);
     }
     
     /**
@@ -235,5 +248,51 @@ class Category
     public function getProducts()
     {
         return $this->products;
+    }
+
+    /**
+     * Set code
+     *
+     * @param string $code
+     * @return Category
+     */
+    public function setCode($code)
+    {
+        $this->code = $code;
+    
+        return $this;
+    }
+
+    /**
+     * Get code
+     *
+     * @return string 
+     */
+    public function getCode()
+    {
+        return $this->code;
+    }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     * @return Category
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+    
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string 
+     */
+    public function getSlug()
+    {
+        return $this->slug;
     }
 }

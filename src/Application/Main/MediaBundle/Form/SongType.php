@@ -12,7 +12,7 @@ class SongType extends AbstractType
     {
         $builder
             ->add('title')
-            ->add('isActive')
+            ->add('file')
 //            ->add('createdAt')
 //            ->add('updatedAt')
             ->add('product')

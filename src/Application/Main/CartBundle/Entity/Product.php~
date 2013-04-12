@@ -45,7 +45,7 @@ class Product
     /**
      * @var float
      *
-     * @ORM\Column(name="price", type="decimal")
+     * @ORM\Column(name="price", type="decimal", scale=2, precision=7)
      */
     private $price;
 
@@ -148,11 +148,10 @@ class Product
      *
      * @return string
      */
-    public function setCode()
+    public function setCode($code)
     {
+        $this->code = $code;
 
-        $this->code = substr(uniqid('', true), -5);
-    
         return $this;
     }
 
@@ -267,6 +266,7 @@ class Product
         $this->createdAt = $this->updatedAt = new \DateTime();
         $this->isActive = false;
         $this->price = 0;
+        $this->code = substr(uniqid('', true), -5);
     }
     
     /**

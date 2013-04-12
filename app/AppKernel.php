@@ -24,12 +24,20 @@ class AppKernel extends Kernel
             new FOS\UserBundle\FOSUserBundle(),
             new FOS\FacebookBundle\FOSFacebookBundle(),
             new Avalanche\Bundle\ImagineBundle\AvalancheImagineBundle(),
+            new Sonata\AdminBundle\SonataAdminBundle(),
+            new Sonata\BlockBundle\SonataBlockBundle(),
+            new Sonata\CacheBundle\SonataCacheBundle(),
+            new Sonata\jQueryBundle\SonatajQueryBundle(),
+            new Sonata\DoctrineORMAdminBundle\SonataDoctrineORMAdminBundle(),
+            new Sonata\UserBundle\SonataUserBundle('FOSUserBundle'),
+
 
 
             new Application\Main\UserBundle\ApplicationMainUserBundle(),
             new Application\Main\DefaultBundle\ApplicationMainDefaultBundle(),
             new Application\Main\CartBundle\ApplicationMainCartBundle(),
             new Application\Main\MediaBundle\ApplicationMainMediaBundle(),
+            new Application\Main\ContributorBundle\ApplicationMainContributorBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

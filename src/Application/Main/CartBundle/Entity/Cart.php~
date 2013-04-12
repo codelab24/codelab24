@@ -24,14 +24,14 @@ class Cart
     /**
      * @var string
      *
-     * @ORM\Column(name="code", type="string", length=255)
+     * @ORM\Column(name="code", type="string", length=5)
      */
     private $code;
 
     /**
      * @var float
      *
-     * @ORM\Column(name="amount", type="decimal")
+     * @ORM\Column(name="amount", type="decimal", scale=2, precision=7)
      */
     private $amount;
 
@@ -154,6 +154,7 @@ class Cart
     {
         $this->products = new \Doctrine\Common\Collections\ArrayCollection();
         $this->createdAt = $this->updatedAt = new \DateTime();
+        $this->code = substr(uniqid('', true), -5);
     }
     
     /**
@@ -210,5 +211,28 @@ class Cart
     public function getProducts()
     {
         return $this->products;
+    }
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     * @return Cart
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+    
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime 
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
     }
 }
