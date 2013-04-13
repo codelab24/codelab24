@@ -12,4 +12,22 @@ use Doctrine\ORM\EntityRepository;
  */
 class SongRepository extends EntityRepository
 {
+    public function getSongsByAlbum($id, $approved = true)
+    {
+        $qb = $this->createQueryBuilder('s');
+
+        $qb->leftJoin('s.albums', "album")
+            ->select('s')
+            ->where('album.id = :id')
+            ->setParameter('id', $id);
+
+//        if (false === is_null($approved))
+//            $qb->andWhere('a.isActive = :approved')
+//                ->setParameter('approved', $approved);
+
+        return $qb->getQuery()
+            ->getResult();
+
+
+    }
 }

@@ -27,7 +27,13 @@
         "facebook/php-sdk": "3.2.0",
         "friendsofsymfony/facebook-bundle": "dev-master",
         "avalanche123/imagine-bundle": "v2.1",
-        "gedmo/doctrine-extensions":      "dev-master"
+        "gedmo/doctrine-extensions":      "dev-master",
+        "sonata-project/admin-bundle": "2.2.*@dev",
+        "sonata-project/block-bundle": "2.2.*@dev",
+        "sonata-project/doctrine-orm-admin-bundle": "2.2.*@dev",
+        "sonata-project/cache-bundle": "2.1.*@dev",
+        "sonata-project/user-bundle": "2.2.*@dev",
+        "sonata-project/easy-extends-bundle": "2.1.*@dev"
     },
     "scripts": {
         "post-install-cmd": [

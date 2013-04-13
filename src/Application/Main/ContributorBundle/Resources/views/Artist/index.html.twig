@@ -1,0 +1,84 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Artist list</h1>
+
+    <table class="table table-condensed table-hover">
+        <thead>
+            <tr>
+                {#<th >Id</th>#}
+                <th></th>
+                <th></th>
+                {#<th>Slug</th>#}
+                {#<th>Description</th>#}
+                {#<th>Isactive</th>#}
+                {#<th>Createdat</th>#}
+                {#<th>Updatedat</th>#}
+                <th class="span2"></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                {#<td><a href="{{ path('artist_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>#}
+                <td>
+                    {% for image in entity.images %}
+                        {% if loop.first %}
+                            {% set path = '/media/images/' ~ image.path %}
+                        <a href="{{ path('artist_show', { 'id': entity.id }) }}">
+                            <img src="{{ path | apply_filter('thumbnail_120x90') }}"/>
+                        </a>
+                        {% endif %}
+                    {% else %}
+                        {#image not found#}
+                    {% endfor %}
+                </td>
+                <td>
+                    <p><strong>{{ entity.title }}</strong></p>
+                    {{ entity.description }}
+                    <p>Tags:
+                        <a href="#"><span class="label label-info">Snipp</span></a>
+                        <a href="#"><span class="label label-info">Bootstrap</span></a>
+                        <a href="#"><span class="label label-info">UI</span></a>
+                        <a href="#"><span class="label label-info">growth</span></a>
+                        | <i class="icon-user"></i> <a href="#">Admin</a>
+                        | <i class="icon-calendar"></i> Sept 16th, 2012 at 4:20 pm
+                        | <i class="icon-comment"></i> <a href="#">3 Comments</a>
+                        | <i class="icon-share"></i> <a href="#">39 Shares</a>
+                    </p>
+                </td>
+                {#<td>{{ entity.slug }}</td>#}
+                {#<td>{{ entity.description }}</td>#}
+                {#<td>{{ entity.isActive }}</td>#}
+                {#<td>{% if entity.createdAt %}{{ entity.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>#}
+                {#<td>{% if entity.updatedAt %}{{ entity.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>#}
+                <td>
+                    <div class="btn-group">
+                        <a href="{{ path('artist_show', { 'id': entity.id }) }}" class="btn">
+                            Show</a>
+                        {#{% if app.user %} &#123;&#35; Change to only grant artists role &#35;&#125;#}
+                            <a href="{{ path('artist_edit', { 'id': entity.id }) }}" class="btn"> <i class=" icon-pen-alt-fill"></i> Edit</a>
+                        {#{% endif %}#}
+                    </div>
+                {#<ul>#}
+                    {#<li>#}
+                        {#<a href="{{ path('artist_show', { 'id': entity.id }) }}">show</a>#}
+                    {#</li>#}
+                    {#<li>#}
+                        {#<a href="{{ path('artist_edit', { 'id': entity.id }) }}">edit</a>#}
+                    {#</li>#}
+                {#</ul>#}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <ul>
+        <li>
+            <a href="{{ path('artist_new') }}">
+                Create a new entry
+            </a>
+        </li>
+    </ul>
+    {% endblock %}

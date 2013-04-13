@@ -34,6 +34,24 @@ class SongController extends Controller
             'entities' => $entities,
         );
     }
+    /**
+     * Lists all Album entities.
+     *
+     * @Route("/album/{id}", name="song_album")
+     * @Method("GET")
+     * @Template("ApplicationMainMediaBundle:Song:index.html.twig")
+     */
+    public function albumAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entities = $em->getRepository('ApplicationMainMediaBundle:Song')->getSongsByAlbum($id);
+        //var_dump($entities); exit;
+
+        return array(
+            'entities' => $entities,
+        );
+    }
 
     /**
      * Creates a new Song entity.
@@ -47,10 +65,23 @@ class SongController extends Controller
         $entity  = new Song();
         $form = $this->createForm(new SongType(), $entity);
         $form->bind($request);
+        $session = $this->getRequest()->getSession();
+        $album_song = $session->get('album_song');
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
+            if($album_song >= 1){
+                //this is artist
+                $album = $em->getRepository('ApplicationMainMediaBundle:Song')->find($album_song);
+                //exit if not found
+                if (!$album) {
+                    throw $this->createNotFoundException('Unable to find Album entity.');
+                }
+
+                $album->addAlbum($entity);
+                $em->persist($album);
+            }
             $em->flush();
 
             return $this->redirect($this->generateUrl('song_show', array('id' => $entity->getId())));
@@ -154,6 +185,11 @@ class SongController extends Controller
         $editForm->bind($request);
 
         if ($editForm->isValid()) {
+            //trigger pre update & persist
+            if ($editForm->get('file')->getData() != NULL) {//user have uploaded a new file
+                $file = $editForm->get('file')->getData();//get 'UploadedFile' object
+                $entity->setPath($file->getClientOriginalName());//change field that holds file's path in db to a temporary value,i.e original file name uploaded by user
+            }
             $em->persist($entity);
             $em->flush();
 

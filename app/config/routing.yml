@@ -1,3 +1,8 @@
+application_main_contributor:
+    resource: "@ApplicationMainContributorBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 application_main_user:
     resource: "@ApplicationMainUserBundle/Controller/"
     type:     annotation
@@ -58,3 +63,16 @@ _imagine:
     resource: .
     type:     imagine
 
+#sonata admin
+admin:
+    resource: '@SonataAdminBundle/Resources/config/routing/sonata_admin.xml'
+    prefix: /admin
+
+_sonata_admin:
+    resource: .
+    type: sonata_admin
+    prefix: /admin
+
+sonata_user:
+    resource: '@SonataUserBundle/Resources/config/routing/admin_security.xml'
+    prefix: /admin

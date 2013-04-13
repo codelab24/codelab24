@@ -1,0 +1,81 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    {#<div class="row-fluid">#}
+        <div class="span12">
+            <h4>Albums
+
+                {# only authenticated users #}
+                <a href="{{ path('album_new') }}" class="btn btn-success btn-small pull-right">
+                    Create a new entry
+                </a>
+                {# end only authenticated users #}
+            </h4>
+
+            <table class="table table-condensed table-hover">
+                <thead>
+                <tr>
+                    <th></th>
+                    {#<th>Code</th>#}
+                    {#<th>Title</th>#}
+                    {#<th>Slug</th>#}
+                    <th></th>
+                    {#<th>Createdat</th>#}
+                    {#<th>Updatedat</th>#}
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for entity in entities %}
+                    <tr>
+                        {#<td>{{ entity.id }}</td>#}
+                        <td> cover </td>
+                        <td><h4><a href="{{ path('album_show', { 'id': entity.id }) }}">{{ entity.title }}</a></h4>
+                            <p>{{ entity.description }}</p>
+                            <p>Tags:
+                                <a href="#"><span class="label label-info">Dance Hall</span></a>
+                                <a href="#"><span class="label label-info">Soca</span></a>
+                                <a href="#"><span class="label label-info">Zouk</span></a>
+                                | <i class="icon-user"></i> <a href="#">artist name</a>
+                                | <i class="icon-calendar"></i> Releasesed
+                                | <i class="icon-comment"></i> <a href="#">3 Comments</a>
+                                | <i class="icon-share"></i> <a href="#">39 Shares</a>
+                            </p>
+                        </td>
+                        {#<td>{{ entity.slug }}</td>#}
+                        <td class="span2 text-center">
+                            <div class="btn-group">
+                                <a href="{{ path('album_show', { 'id': entity.id }) }}" class="btn">show</a>
+                                {# only authenticated users #}
+                                <a href="{{ path('album_edit', { 'id': entity.id }) }}" class="btn">edit</a>
+                                {# end only authenticated users #}
+                            </div>
+                        </td>
+                        {#<td>{% if entity.createdAt %}{{ entity.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>#}
+                        {#<td>{% if entity.updatedAt %}{{ entity.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>#}
+                        {#<td>#}
+                        {#<ul>#}
+                        {#<li>#}
+
+                        {#</li>#}
+                        {#<li>#}
+
+                        {#</li>#}
+                        {#</ul>#}
+                        {#</td>#}
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+            {#<ul>#}
+            {#<li>#}
+            {#<a href="{{ path('album_new') }}">#}
+            {#Create a new entry#}
+            {#</a>#}
+            {#</li>#}
+            {#</ul>#}
+        </div>
+    {#</div>#}
+
+{% endblock %}

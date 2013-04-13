@@ -1,10 +1,11 @@
 imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
+    - { resource: doctrine_extentions.yml }
 
 framework:
     #esi:             ~
-    translator:      { fallback: %locale% }
+    translator:      ~
     secret:          %secret%
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
@@ -48,6 +49,8 @@ doctrine:
         user:     %database_user%
         password: %database_password%
         charset:  UTF8
+        types:
+            json: Sonata\Doctrine\Types\JsonType
         # if using pdo_sqlite as your database driver, add the path in parameters.yml
         # e.g. database_path: %kernel.root_dir%/data/data.db3
         # path:     %database_path%
@@ -57,6 +60,8 @@ doctrine:
         auto_mapping: true
         # only these lines are added additionally
         mappings:
+            ApplicationSonataUserBundle: ~
+            SonataUserBundle: ~
             translatable:
                 type: annotation
                 alias: Gedmo
@@ -81,8 +86,11 @@ swiftmailer:
 #            - { name: knp_menu.voter }
 fos_user:
     db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
-    firewall_name: main
-    user_class: Application\Main\UserBundle\Entity\User
+    firewall_name:  main
+    user_class: Application\Sonata\UserBundle\Entity\User
+
+    group:
+        group_class: Application\Sonata\UserBundle\Entity\Group
 
 # Facebook configuration
 fos_facebook:
@@ -107,4 +115,74 @@ avalanche_imagine:
         my_thumb:
             type:    thumbnail
             options: { size: [120, 90], mode: outbound }
+
+        thumbnail_120x90:
+            type:    thumbnail
+            options: { size: [120, 90], mode: outbound }
+
+        main_200x180:
+            type:    thumbnail
+            options: { size: [200, 175], mode: outbound }
+
+#Sonata
+sonata_block:
+    default_contexts: [cms]
+    blocks:
+        sonata.admin.block.admin_list:
+            contexts:   [admin]
+
+        #sonata.admin_doctrine_orm.block.audit:
+        #    contexts:   [admin]
+
+        sonata.block.service.text:
+        sonata.block.service.action:
+        sonata.block.service.rss:
+
+        # Some specific block from the SonataMediaBundle
+        #sonata.media.block.media:
+        #sonata.media.block.gallery:
+        #sonata.media.block.feature_media:
+
+services:
+    fos_facebook.user.login:
+            class: Application\Main\UserBundle\Security\User\Provider\FacebookProvider
+            arguments:
+                facebook: "@fos_facebook.api"
+                userManager: "@fos_user.user_manager"
+                validator: "@validator"
+                container: "@service_container"
+    sonata.admin.category:
+        class: Application\Main\CartBundle\Admin\CategoryAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: posts, label: "Category" }
+        arguments:
+            - ~
+            - Application\Main\CartBundle\Entity\Category
+            - 'SonataAdminBundle:CRUD'
+#        calls:
+#            - [ setTranslationDomain, [YourNSAdminBundle]]
+
+sonata_admin:
+    title:      Sonata Project
+    title_logo: /bundles/sonataadmin/logo_title.png
+    templates:
+        # default global templates
+        layout:  SonataAdminBundle::standard_layout.html.twig
+        ajax:    SonataAdminBundle::ajax_layout.html.twig
+
+        # default actions templates, should extend a global templates
+        list:    SonataAdminBundle:CRUD:list.html.twig
+        show:    SonataAdminBundle:CRUD:show.html.twig
+        edit:    SonataAdminBundle:CRUD:edit.html.twig
+
+    dashboard:
+        blocks:
+            # display a dashboard block
+            - { position: left, type: sonata.admin.block.admin_list }
+
+sonata_user:
+    security_acl: false
+    manager_type: orm # can be orm or mongodb
+
+
 
