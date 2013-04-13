@@ -47,7 +47,7 @@ security:
                         server_url: "http://codelab24.com/app_dev.php"
 #                        pattern: ^/
                         login_path: /login
-                        check_path: /login_check
+                        check_path: /facebook/login_check
                         provider: fos_facebook_provider
                         default_target_path: /
             switch_user:        true
