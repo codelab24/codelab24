@@ -7,7 +7,6 @@ vendor/*
 */cache/*
 web/uploads/*
 web/bundles/*
-web/media/*
 
 # Configuration files
 app/config/parameters.ini
@@ -15,5 +14,4 @@ app/config/parameters.yml
 
 #ide files
 .idea
-.project
 composer.phar
